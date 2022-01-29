@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "rideituserapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "E:\\React Native App\\RideIT\\amplify\\backend\\api\\rideituserapp\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authrideituserapp3c662f2c3c662f2c"
+    }
+  }
+}
