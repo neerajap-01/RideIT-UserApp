@@ -1,5 +1,15 @@
 import React, {useState} from "react";
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput, Alert} from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    useWindowDimensions,
+    ScrollView,
+    TextInput,
+    Alert,
+    ToastAndroid
+} from "react-native";
 import Logo from "../../../assets/images/rideit.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -26,7 +36,6 @@ const SignInScreen = () => {
         }
         setLoading(false);
 
-        //navigation.navigate('Home');
     }
 
     const onForgotPasswordPressed = () => {

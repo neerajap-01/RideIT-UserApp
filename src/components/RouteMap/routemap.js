@@ -15,7 +15,6 @@ const Routemap = ({ origin, destination }) => {
   };
 
   const mapRef = useRef();
-
   return (
     <MapView
       ref={mapRef}

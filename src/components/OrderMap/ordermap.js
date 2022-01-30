@@ -19,12 +19,13 @@ const OrderMap = ({ car }) => {
             style={{width: '100%', height: '100%'}}
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
+            showsMyLocationButton={true}
             showsCompass={true}
             initialRegion={{
-                latitude: 19.073761,
-                longitude: 72.87980,
-                latitudeDelta: 0.5822,
-                longitudeDelta: 0.0235,
+                latitude: 20.5937,
+                longitude: 78.9629,
+                latitudeDelta: 60,
+                longitudeDelta: 10,
             }}>
             {car && (<Marker
                 key={car.id}

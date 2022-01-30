@@ -10,7 +10,7 @@ navigator.geolocation = require('@react-native-community/geolocation');
 
 export default class Map extends React.Component {
   constructor(props) {
-    //Alert.alert("Important", "You have to press refresh icon in order to see the updated location of cars.");
+    Alert.alert("Important", "You have to press refresh icon in order to see the updated location of cars.");
     super(props);
     this.state = {
       latitude: 0,
