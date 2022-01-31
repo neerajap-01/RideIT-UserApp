@@ -49,7 +49,7 @@ const DestinationSearch = props => {
           }}
           fetchDetails
           query={{
-            key: "AIzaSyBM2bb5s0UElBjGTcI-yHcPG32xJHliJUA",
+            key: "Google_Maps_API_key_Paste_Here",
             language: "en",
           }}
           renderRow={(data: GooglePlaceData) => <PlaceRow data={data} />}
@@ -74,7 +74,7 @@ const DestinationSearch = props => {
           }}
           fetchDetails
           query={{
-            key: "AIzaSyBM2bb5s0UElBjGTcI-yHcPG32xJHliJUA",
+            key: "Google_Maps_API_key_Paste_Here",
             language: "en",
           }}
           renderRow={(data: GooglePlaceData) => <PlaceRow data={data} />}
