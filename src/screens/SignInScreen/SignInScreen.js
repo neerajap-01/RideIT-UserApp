@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -8,7 +8,7 @@ import {
     ScrollView,
     TextInput,
     Alert,
-    ToastAndroid
+    ToastAndroid, PermissionsAndroid, Platform
 } from "react-native";
 import Logo from "../../../assets/images/rideit.png";
 import CustomInput from "../../components/CustomInput";
@@ -17,10 +17,35 @@ import SocialSignInButtons from "../../components/SocialSignInButtons/SocialSign
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import {Auth} from "aws-amplify";
+import Geolocation from "@react-native-community/geolocation";
 
 const SignInScreen = () => {
     const {control, handleSubmit, formState: {errors}} = useForm();
     const [loading, setLoading] = useState(false);
+
+    const androidPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can use the location');
+            } else {
+                console.log('Location permission denied');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
+
+    useEffect(() => {
+        if (Platform.OS === 'android') {
+            androidPermission();
+        } else {
+            // IOS
+            Geolocation.requestAuthorization();
+        }
+    }, []);
 
     const onSignInPressed = async (data) => {
         if(loading){
@@ -38,6 +63,9 @@ const SignInScreen = () => {
 
     }
 
+    const onUserNotConfirmedPressed = () => {
+        navigation.navigate("notConfirmed")
+    }
     const onForgotPasswordPressed = () => {
         navigation.navigate("ForgotPassword");
     }
@@ -87,11 +115,22 @@ const SignInScreen = () => {
 
                 <CustomButton text={loading ? "Loading..." : "Sign In"} onPress={handleSubmit(onSignInPressed)}/>
 
-                <CustomButton
-                    text="Forgot Password?"
-                    onPress={onForgotPasswordPressed}
-                    type="TERTIARY"
-                />
+                <View style={styles.new}>
+                    <View style={styles.forgotPwd}>
+                        <CustomButton
+                            text="Forgot Password?"
+                            onPress={onForgotPasswordPressed}
+                            type="TERTIARY"
+                        />
+                    </View>
+                    <View style={styles.notConfirmed}>
+                        <CustomButton
+                            text="User not confirmed?"
+                            onPress={onUserNotConfirmedPressed}
+                            type="TERTIARY"
+                        />
+                    </View>
+                </View>
 
                 {/*<SocialSignInButtons />*/}
 
@@ -115,6 +154,16 @@ const styles = StyleSheet.create({
         width: '70%',
         maxWidth: 400,
         maxHeight: 300,
+    },
+    new: {
+        display: "flex",
+        flexDirection: 'row',
+    },
+    forgotPwd: {
+        marginRight: 25,
+    },
+    notConfirmed: {
+        marginLeft: 25,
     },
 });
 

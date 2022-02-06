@@ -1,19 +1,11 @@
 import React, {useEffect} from 'react';
 import {
-    View,
     Text,
-    Button,
-    StyleSheet,
     TouchableOpacity,
-    Image,
-    SafeAreaView,
-    PermissionsAndroid,
-    Platform
 } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import LottieView from 'lottie-react-native';
 import {StackActions, useNavigation} from "@react-navigation/native";
-import Geolocation from "@react-native-community/geolocation";
 
 
 const Done = ({...props}) => (
@@ -24,30 +16,6 @@ const Done = ({...props}) => (
 );
 const OnboardingScreen = props => {
     const navigation = useNavigation();
-
-    const androidPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('You can use the location');
-            } else {
-                console.log('Location permission denied');
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
-    useEffect(() => {
-        if (Platform.OS === 'android') {
-            androidPermission();
-        } else {
-            // IOS
-            Geolocation.requestAuthorization();
-        }
-    }, []);
 
   return (
       <Onboarding
