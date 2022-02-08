@@ -17,6 +17,7 @@ import {Text, View} from "react-native";
 import CustomDrawer from "./CustomDrawer";
 import OrderScreen from "../screens/OrderScreen"
 import UsernotConfirmedScreen from "../screens/notConfirmedScreen/UsernotConfirmedScreen";
+import OrderCompletedScreen from "../screens/OrderCompletedScreen/orderCompletedScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -112,6 +113,7 @@ const Navigation = () => {
                     <Stack.Screen name={"DestinationSearch"} component={DestinationSearch} />
                     <Stack.Screen name={"SearchResults"} component={SearchResult} />
                     <Stack.Screen name={"OrderPage"} component={OrderScreen} />
+                    <Stack.Screen name={"OrderCompletePage"} component={OrderCompletedScreen} />
                 </>
             ) : (
                 <>

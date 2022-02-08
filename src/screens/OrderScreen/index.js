@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, View, Pressable, Text} from "react-native";
+import {StyleSheet, View, Pressable, Text, Alert} from "react-native";
 import OrderMap from "../../components/OrderMap/ordermap";
-import {useRoute} from "@react-navigation/native";
+import {StackActions, useNavigation, useRoute} from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
 import {getOrder, getCar} from "../../graphql/queries";
 import {onCarUpdated, onOrderUpdated} from "./subscription";
@@ -11,6 +11,8 @@ import Entypo from "react-native-vector-icons/Entypo";
 const OrderScreen = props => {
     const [car, setCar] = useState(null);
     const [order, setOrder] = useState(null);
+    const [details, setDetails] = useState(null);
+    const navigation = useNavigation();
 
     const route = useRoute();
     //console.warn(route.params.id);
@@ -52,7 +54,7 @@ const OrderScreen = props => {
                 const carData = await API.graphql(
                     graphqlOperation(getCar, { id: order.carId })
                 );
-                console.warn(carData);
+                setDetails(carData.data.getCar.user);
                 setCar(carData.data.getCar);
             } catch (e) {
                 console.error(e);
@@ -85,7 +87,11 @@ const OrderScreen = props => {
                     <Text style={{color: 'black', fontSize: 20}}>Order Status</Text>
                 </View>
             )
-        } else {
+        }
+        if(order?.status === 'DROPPING OFF') {
+            navigation.dispatch(StackActions.replace('OrderCompletePage'));
+        }
+        else {
             return (
                 <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 300,}}>
                     <Text style={{color: 'black', flexDirection: "row", fontWeight:'900', fontSize: 20, marginBottom: -5}}>{order?.status}</Text>
@@ -97,6 +103,13 @@ const OrderScreen = props => {
 
     }
 
+    const fetchDetails = () => {
+      if(details === null) {
+          Alert.alert("Order Pending...", "Your order has not yet been accepted by any driver, Please wait for sometime and Try again later");
+      } else {
+          Alert.alert("Driver details", "ID no.:- "+details.id+", "+"E-mail Address:- "+details.email+", "+"Username:- "+details.username+".");
+      }
+    };
   return (
     <View style={{ flex: 1 }}>
       <View style={[{ flex: 2 }]}>
@@ -106,7 +119,9 @@ const OrderScreen = props => {
     {/*
     {/*</View>*/}
     <View style={styles.bottomContainer}>
-        <Ionicons name={"options"} size={30} color={"#4a4a4a"}/>
+        <Pressable onPress={fetchDetails}>
+            <Entypo name={"shield"} size={30} color={"#4a4a4a"}/>
+        </Pressable>
         {renderBottomTitle()}
         <Entypo name={"list"} size={30} color={"#4a4a4a"}/>
     </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, ToastAndroid, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles.js';
@@ -14,6 +14,25 @@ const HomeSearch = props => {
     navigation.navigate('DestinationSearch');
   };
 
+  const somaiyaPressed = () => {
+    ToastAndroid.showWithGravityAndOffset(
+        "Coming soon",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+    );
+  };
+  const homePressed = () => {
+    ToastAndroid.showWithGravityAndOffset(
+        "Coming soon",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+    );
+  };
+
   return (
     <View>
       {/* InputBar */}
@@ -26,19 +45,19 @@ const HomeSearch = props => {
         </View>
       </Pressable>
       {/* Previous Destination */}
-      <View style={styles.row}>
+      <Pressable onPress={somaiyaPressed} style={styles.row}>
         <View style={styles.iconContainer}>
           <AntDesign name={'clockcircle'} size={20} color={'#fff'} />
         </View>
         <Text style={styles.destinationText}>Somaiya University</Text>
-      </View>
+      </Pressable>
       {/* Home Destination */}
-      <View style={styles.row}>
+      <Pressable onPress={homePressed} style={styles.row}>
         <View style={[styles.iconContainer, {backgroundColor: '#218cff'}]}>
           <Entypo name={'home'} size={20} color={'#fff'} />
         </View>
         <Text style={styles.destinationText}>Home</Text>
-      </View>
+      </Pressable>
     </View>
   );
 };

@@ -5,13 +5,13 @@ import styles from "./styles";
 import PlaceRow from "./PlaceRow";
 import { useNavigation } from "@react-navigation/native";
 
-const homePlace = {
-  description: "Home",
-  geometry: { location: { lat: 48.8152937, lng: 2.4597668 } },
-};
+// const homePlace = {
+//   description: "Home",
+//   geometry: { location: { lat: 48.8152937, lng: 2.4597668 } },
+// };
 const workPlace = {
-  description: "Work",
-  geometry: { location: { lat: 48.8496818, lng: 2.2940881 } },
+  description: "Somaiya College",
+  geometry: { location: { lat: 19.07709135034924,  lng: 72.900867041192 } },
 };
 
 const DestinationSearch = props => {
@@ -53,8 +53,6 @@ const DestinationSearch = props => {
             language: "en",
           }}
           renderRow={(data: GooglePlaceData) => <PlaceRow data={data} />}
-          renderDescription={data => data.description || data.vicinity}
-          predefinedPlaces={[homePlace, workPlace]}
         />
 
         <GooglePlacesAutocomplete
@@ -78,6 +76,8 @@ const DestinationSearch = props => {
             language: "en",
           }}
           renderRow={(data: GooglePlaceData) => <PlaceRow data={data} />}
+          renderDescription={data => data.description || data.vicinity}
+          predefinedPlaces={[ workPlace]}
         />
         {/*Circle near Origin input*/}
         <View style={styles.circle} />
