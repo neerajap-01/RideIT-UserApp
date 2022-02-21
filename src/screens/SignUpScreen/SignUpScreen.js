@@ -1,15 +1,18 @@
 import React, {useCallback, useState} from "react";
-import {View, Text, StyleSheet, ScrollView, Alert, Linking, Button} from "react-native";
+import {View, Text, StyleSheet, ScrollView, Alert, Linking, Button, TouchableOpacity} from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import SocialSignInButtons from "../../components/SocialSignInButtons/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import {Auth} from "aws-amplify";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const SignUpScreen = () => {
     const {control, handleSubmit, watch} = useForm();
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+    const [visible, setVisible] = useState(true);
     const pwd = watch('password');
 
     const onRegisterPressed = async (data) => {
@@ -101,7 +104,7 @@ const SignUpScreen = () => {
                     name="password"
                     placeholder="Password"
                     control={control}
-                    secureTextEntry
+                    secureTextEntry={visible}
                     rules={{
                         required: 'Password is required',
                         minLength: {
@@ -114,16 +117,42 @@ const SignUpScreen = () => {
                         }
                     }}
                 />
+                <TouchableOpacity
+                    style={styles.passwordShow}
+                    onPress={()=>{
+                        setVisible(!visible);
+                        setShow(!show);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name={show === false ? 'eye' : 'eye-off'}
+                        size={26}
+                        color={'lightgrey'}
+                    />
+                </TouchableOpacity>
 
                 <CustomInput
                     name="password-repeat"
                     placeholder="Confirm Password"
                     control={control}
-                    secureTextEntry
+                    secureTextEntry={visible}
                     rules={{
                         validate: value => value === pwd || 'Password do not match',
                     }}
                 />
+                <TouchableOpacity
+                    style={styles.passwordShow}
+                    onPress={()=>{
+                        setVisible(!visible);
+                        setShow(!show);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name={show === false ? 'eye' : 'eye-off'}
+                        size={26}
+                        color={'lightgrey'}
+                    />
+                </TouchableOpacity>
 
                 <CustomButton text={loading ? "Loading..." : "Register"} onPress={handleSubmit(onRegisterPressed)}/>
 
@@ -166,6 +195,13 @@ const styles = StyleSheet.create({
     link: {
         color: '#FDB075'
     },
+    passwordShow: {
+        position: "relative",
+        alignItems: "flex-end",
+        left: 170,
+        marginTop: -45,
+        marginBottom: 18,
+    }
 });
 
 export default SignUpScreen

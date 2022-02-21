@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, View, Pressable, Text, Alert} from "react-native";
+import {StyleSheet, View, Pressable, Text, Alert, ToastAndroid} from "react-native";
 import OrderMap from "../../components/OrderMap/ordermap";
 import {StackActions, useNavigation, useRoute} from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
@@ -123,12 +123,23 @@ const OrderScreen = props => {
             <Entypo name={"shield"} size={30} color={"#4a4a4a"}/>
         </Pressable>
         {renderBottomTitle()}
-        <Entypo name={"list"} size={30} color={"#4a4a4a"}/>
+        <Pressable onPress={showToastWithGravityAndOffset}>
+            <Entypo name={"list"} size={30} color={"#4a4a4a"}/>
+        </Pressable>
+
     </View>
     </View>
   );
 };
-
+const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+        "Coming soon",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+    );
+};
 const styles = StyleSheet.create({
     bottomContainer: {
         height: 100,

@@ -30,8 +30,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   price: {
-    fontWeight: "bold",
     fontSize: 18,
+    top: 2,
+    marginLeft: 5,
+  },
+  duration: {
+    fontWeight: "bold",
+    fontSize: 20,
     marginLeft: 5,
   },
 });

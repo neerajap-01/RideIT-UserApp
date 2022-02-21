@@ -1,6 +1,7 @@
 import React from "react";
-import {View, Text, TextInput, StyleSheet} from "react-native";
+import {View, Text, TextInput, StyleSheet, TouchableOpacity} from "react-native";
 import {Controller} from "react-hook-form";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CustomInput = ({
  control,

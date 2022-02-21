@@ -2,11 +2,10 @@ import React from "react";
 import { Image, Text, View, Pressable } from "react-native";
 import styles from "./styles";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const RideSelectionRows = props => {
-    const { type, onPress, isSelected } = props;
-
+    const { type, onPress, isSelected, sendData} = props;
     const getImage = () => {
         if (type.type === "Car") {
             return require("../../assets/images/car.jpeg");
@@ -31,12 +30,14 @@ const RideSelectionRows = props => {
                 <Text style={styles.type}>
                     {type.type} <FontAwesome5 name={"user-check"} size={16} />
                 </Text>
-                <Text style={styles.time}>8.03AM drop off</Text>
+                <Text>{sendData ? <Text style={styles.time}>Distance is {sendData.distance ? sendData.distance.toFixed(1) : '?'} km's</Text> : "Loading info..."}</Text>
             </View>
 
             <View style={styles.rightContainer}>
-                <Ionicons name={"pricetag"} size={18} color={"#42d742"} />
-                <Text style={styles.price}>est. ₹{type.price}</Text>
+                <Text style={styles.price}>est: </Text>
+                <Text>
+                    {sendData ? <Text style={styles.duration}>{sendData.duration ? sendData.duration.toFixed(1) : '?'} min's</Text> : "Loading info..."}
+                </Text>
             </View>
         </Pressable>
     );

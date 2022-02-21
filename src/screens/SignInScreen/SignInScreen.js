@@ -8,20 +8,23 @@ import {
     ScrollView,
     TextInput,
     Alert,
-    ToastAndroid, PermissionsAndroid, Platform
+    ToastAndroid, PermissionsAndroid, Platform, TouchableOpacity
 } from "react-native";
 import Logo from "../../../assets/images/rideit.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import SocialSignInButtons from "../../components/SocialSignInButtons/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import {Auth} from "aws-amplify";
 import Geolocation from "@react-native-community/geolocation";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+//import SocialSignInButtons from "../../components/SocialSignInButtons/SocialSignInButtons";
 
 const SignInScreen = () => {
     const {control, handleSubmit, formState: {errors}} = useForm();
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+    const [visible, setVisible] = useState(true);
 
     const androidPermission = async () => {
         try {
@@ -107,11 +110,24 @@ const SignInScreen = () => {
                     name="password"
                     placeholder="Password"
                     control={control}
-                    secureTextEntry
+                    secureTextEntry={visible}
                     rules={{
                         required: 'Password is required',
                     }}
                 />
+                <TouchableOpacity
+                    style={styles.passwordShow}
+                    onPress={()=>{
+                        setVisible(!visible);
+                        setShow(!show);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name={show === false ? 'eye' : 'eye-off'}
+                        size={26}
+                        color={'lightgrey'}
+                    />
+                </TouchableOpacity>
 
                 <CustomButton text={loading ? "Loading..." : "Sign In"} onPress={handleSubmit(onSignInPressed)}/>
 
@@ -165,6 +181,13 @@ const styles = StyleSheet.create({
     notConfirmed: {
         marginLeft: 25,
     },
+    passwordShow: {
+        position: "relative",
+        alignItems: "flex-end",
+        left: 170,
+        marginTop: -45,
+        marginBottom: 25,
+    }
 });
 
 export default SignInScreen

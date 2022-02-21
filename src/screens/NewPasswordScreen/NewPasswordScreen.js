@@ -1,14 +1,17 @@
 import React, {useState} from "react";
-import {View, Text, StyleSheet, ScrollView, Alert} from "react-native";
+import {View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity} from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {useForm} from "react-hook-form";
 import {Auth} from "aws-amplify";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const NewPasswordScreen = () => {
     const route = useRoute();
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+    const [visible, setVisible] = useState(true);
     const throwError = "PostConfirmation failed with error Cannot read property 'done' of undefined."
     const {control, handleSubmit} = useForm({ defaultValues: { username: route?.params?.username } });
 
@@ -65,7 +68,7 @@ const NewPasswordScreen = () => {
                     name="password"
                     placeholder="Password"
                     control={control}
-                    secureTextEntry
+                    secureTextEntry={visible}
                     rules={{
                         required: 'Password is required',
                         minLength: {
@@ -78,6 +81,19 @@ const NewPasswordScreen = () => {
                         }
                     }}
                 />
+                <TouchableOpacity
+                    style={styles.passwordShow}
+                    onPress={()=>{
+                        setVisible(!visible);
+                        setShow(!show);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name={show === false ? 'eye' : 'eye-off'}
+                        size={26}
+                        color={'lightgrey'}
+                    />
+                </TouchableOpacity>
 
                 <CustomButton text={loading ? "Loading..." : "Submit"} onPress={handleSubmit(onSubmitPressed)}/>
 
@@ -113,6 +129,13 @@ const styles = StyleSheet.create({
     link: {
         color: '#FDB075'
     },
+    passwordShow: {
+        position: "relative",
+        alignItems: "flex-end",
+        left: 170,
+        marginTop: -45,
+        marginBottom: 25,
+    }
 });
 
 export default NewPasswordScreen

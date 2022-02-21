@@ -1,11 +1,49 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, Text, View, StyleSheet} from 'react-native';
+import {Pressable, Text, View, StyleSheet, Image, ToastAndroid} from 'react-native';
 import {DrawerContentScrollView, DrawerItemList,} from '@react-navigation/drawer';
 import {API, Auth, graphqlOperation} from "aws-amplify";
 import {getUser} from "../graphql/queries";
+import logo from "../../assets/images/rideit.png"
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const CustomDrawer = props => {
     const [name, setName] = useState(null);
+    const msg = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            "Coming soon",
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+    }
+    const moreWithAccount = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            "Coming soon",
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+    }
+    const moneyDrive = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            "Coming soon",
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+    }
+    const logout = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            "Logged out successfully",
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+    }
     const fetchName = async () => {
         try {
             const userData = await Auth.currentAuthenticatedUser();
@@ -32,17 +70,29 @@ const CustomDrawer = props => {
           }}>
           <View
             style={{
-              backgroundColor: '#cacaca',
+              backgroundColor: '#ffffff',
               width: 50,
               height: 50,
               borderRadius: 25,
               marginRight: 10,
             }}
-          />
+          >
+          <Image source={logo} style={{
+              backgroundColor: '#ffffff',
+              maxWidth: 50,
+              maxHeight: 50,
+              borderRadius: 25,
+              marginRight: 10,
+          }}/>
+        </View>
 
           <View>
             <Text style={{color: 'white', fontSize: 24}}>{name?.username}</Text>
-            <Text style={{color: 'lightgrey'}}>5.00 *</Text>
+              <View style={{display: 'flex', flexDirection: "row-reverse"}}>
+                  <Text style={{color: 'lightgrey', marginTop: -2, left: 3}}>verified user</Text>
+                  <FontAwesome5 style={{position: 'relative', left: 10,}} name={"user-check"} size={14} color={'white'}
+                  />
+              </View>
           </View>
         </View>
 
@@ -57,18 +107,14 @@ const CustomDrawer = props => {
             marginVertical: 10,
           }}>
           <Pressable
-            onPress={() => {
-              console.warn('Messages');
-            }}>
+            onPress={() => msg()}>
             <Text style={{color: '#dddddd', paddingVertical: 5}}>Messages</Text>
           </Pressable>
         </View>
 
         {/* Do more */}
         <Pressable
-          onPress={() => {
-            console.warn('Make Money Driving');
-          }}>
+          onPress={() => moreWithAccount()}>
           <Text style={{color: '#dddddd', paddingVertical: 5}}>
             Do more with your account
           </Text>
@@ -76,9 +122,7 @@ const CustomDrawer = props => {
 
         {/* Make money */}
         <Pressable
-          onPress={() => {
-            console.warn('Make Money Driving');
-          }}>
+          onPress={() => moneyDrive()}>
           <Text style={{color: 'white', paddingVertical: 5}}>
             Make money driving
           </Text>
@@ -89,7 +133,8 @@ const CustomDrawer = props => {
 
         <Pressable
             onPress={() => {
-                Auth.signOut()
+                Auth.signOut();
+                logout();
             }}
             style={styles.container}
         >
