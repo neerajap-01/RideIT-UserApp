@@ -6,8 +6,7 @@ The aim of this project is to provide such user friendly and interactive service
 
 ## Sneak Peak
 
-![](https://drive.google.com/file/d/1UNRgNOwIdPXSR9kHKbc06Zziw9-SQyrR/preview)
-
+![](https://github.com/neerajap-01/RideIT-Website/blob/master/assets/rideintro.gif)
 
 - 👋 Hi, my name is Neeraj Pal
 - 👀 I’m interested in new Technolgy
@@ -22,7 +21,7 @@ Install RideIT apk from it's official website given below.
 ```bash
   https://www.rideit.tk/
 ```
-                        OR
+   OR
 
 Visit to my portfolio website to contact me and get the apk and source code.     
 
